@@ -1,0 +1,279 @@
+openapi: 3.1.0
+info:
+  title: Accounts app
+  description: Rest app for managing accounts
+  version: 0.0.1
+servers:
+  - url: 'http:localhost:8080/api'
+    description: Local server
+tags:
+  - name: Accounts
+    description: Accounts operations
+
+paths:
+
+  /api/v1/accounts:
+    post:
+      summary: Create customer account
+      operationId: createAccount
+      tags:
+        - Accounts
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateAccountRequest'
+      responses:
+        '201':
+          description: Created
+          headers:
+            Location:
+              schema:
+                type: string
+                example: http://localhost:8080/api/v1/accounts/1
+              description: The location of the created resource
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+    get:
+      summary: get account by email
+      operationId: getAccountByEmail
+      tags:
+        - Accounts
+      parameters:
+        - name: email
+          in: query
+          required: true
+          schema:
+            $ref: '#/components/schemas/AccountEmail'
+          description: Account email
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccountResponse'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+
+  /api/v1/accounts/{account_id}:
+    get:
+      summary: Get account by ID
+      operationId: getAccountById
+      tags:
+        - Accounts
+      parameters:
+        - name: account_id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+          description: Account ID
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccountResponse'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+    delete:
+      summary: Delete account by ID
+      operationId: deleteAccountById
+      tags:
+        - Accounts
+      parameters:
+        - name: account_id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+          description: Account ID
+      responses:
+        '204':
+          description: No content
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+    put:
+      summary: Update account by ID
+      operationId: updateAccountById
+      tags:
+        - Accounts
+      parameters:
+        - name: account_id
+          in: path
+          required: true
+          schema:
+              type: integer
+              format: int64
+          description: Account ID
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateAccountRequest'
+      responses:
+        '204':
+          description: No content
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+
+components:
+  schemas:
+
+    BaseAccount:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Last name
+          example: Doe
+          minLength: 2
+          maxLength: 50
+        email:
+          $ref: '#/components/schemas/AccountEmail'
+        phone:
+          type: string
+          description: Phone
+          example: 30999123341
+          minLength: 10
+          maxLength: 15
+        account_type:
+          type: string
+          description: Account type
+          example: SAVINGS
+          minLength: 2
+          maxLength: 50
+        address:
+          type: string
+          description: Address
+          example: 123 Main St
+          maxLength: 50
+      required:
+        - name
+        - email
+        - phone
+        - account_type
+        - address
+
+    CreateAccountRequest:
+      type: object
+      allOf:
+        - $ref: '#/components/schemas/BaseAccount'
+
+    UpdateAccountRequest:
+      type: object
+      allOf:
+        - $ref: '#/components/schemas/BaseAccount'
+
+    AccountResponse:
+      type: object
+      allOf:
+        - $ref: '#/components/schemas/BaseAccount'
+      properties:
+        created_at:
+          type: string
+          format: date-time
+          description: Created at
+          example: 2023-01-01T00:00:00Z
+        updated_at:
+          type: string
+          format: date-time
+          description: Updated at
+          example: 2023-01-01T00:00:00Z
+        created_by:
+          type: string
+          description: Created by
+          example: user
+        updated_by:
+          type: string
+          description: Updated by
+          example: user
+      required:
+        - created_at
+        - created_by
+
+    AccountEmail:
+      type: string
+      description: Email
+      example: customer@gmail.com
+      pattern: '^[^\s@]+@[^\s@]+\.[^\s@]+$'
+      maxLength: 50
+
+    ErrorResponse:
+      type: object
+      properties:
+        timestamp:
+          type: string
+          format: date-time
+          description: Timestamp
+          example: 2023-01-01T00:00:00Z
+        status:
+          type: integer
+          format: int32
+          description: Error code
+          example: 400
+        error:
+          type: string
+          description: Error message
+          example: Invalid request
+        path:
+          type: string
+          description: Request path
+          example: /api/v1/customers
+      required:
+        - timestamp
+        - status
+        - error
+        - path
+
+  responses:
+
+    BadRequest:
+      description: Bad request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          example:
+            timestamp: 2023-01-01T00:00:00Z
+            status: 400
+            error: Invalid request
+            path: /api/v1/accounts
+
+    NotFound:
+      description: Not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          example:
+            timestamp: 2023-01-01T00:00:00Z
+            status: 404
+            error: Resource not found
+            path: /api/v1/accounts
+
+    InternalServerError:
+      description: Internal server error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          example:
+            timestamp: 2023-01-01T00:00:00Z
+            status: 500
+            error: Server error
+            path: /api/v1/accounts

@@ -1,0 +1,3 @@
+CREATE DATABASE accounts_db;
+CREATE DATABASE loans_db;
+CREATE DATABASE cards_db;

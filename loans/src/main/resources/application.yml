@@ -1,0 +1,17 @@
+spring:
+
+  application:
+    name: loans
+
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://${LOANS_DB_HOST:localhost}:${LOANS_DB_PORT:5432}/loans_db
+    username: ${LOANS_DB_USER:dev}
+    password: ${LOANS_DB_USER:pass}
+
+  flyway:
+    baseline-on-migrate: true
+    locations: classpath:db/schema-migration
+
+server:
+  port: 8090

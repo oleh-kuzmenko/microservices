@@ -1,0 +1,43 @@
+version: '3.9'
+
+services:
+  accounts:
+    image: accounts:0.0.1
+    container_name: accounts
+    ports:
+      - 8080:8080
+    environment:
+      - ACCOUNTS_DB_HOST=microservices_db
+    depends_on:
+      - db
+
+  loans:
+    image: loans:0.0.1-SNAPSHOT
+    container_name: loans
+    ports:
+      - 8090:8090
+    environment:
+      - LOANS_DB_HOST=microservices_db
+    depends_on:
+      - db
+
+  cards:
+    image: cards:0.0.1-SNAPSHOT
+    container_name: cards
+    ports:
+      - 9000:9000
+    environment:
+      - CARDS_DB_HOST=microservices_db
+    depends_on:
+      - db
+
+  db:
+    image: postgres:14-alpine
+    container_name: microservices_db
+    ports:
+      - 5432:5432
+    environment:
+      - POSTGRES_USER=dev
+      - POSTGRES_PASSWORD=pass
+    volumes:
+      - ./create_dbs.sql:/docker-entrypoint-initdb.d/create_dbs.sql:ro
