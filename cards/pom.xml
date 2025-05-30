@@ -11,7 +11,6 @@
   <groupId>com.ol.app</groupId>
   <artifactId>cards</artifactId>
   <version>0.0.1-SNAPSHOT</version>
-  <packaging>war</packaging>
 
   <name>cards</name>
   <description>Rest app for managing cards</description>

@@ -10,6 +10,12 @@ services:
       - ACCOUNTS_DB_HOST=microservices_db
     depends_on:
       - db
+    networks:
+      microservices:
+    deploy:
+      resources:
+        limits:
+          memory: 700M
 
   loans:
     image: loans:0.0.1-SNAPSHOT
@@ -20,6 +26,12 @@ services:
       - LOANS_DB_HOST=microservices_db
     depends_on:
       - db
+    networks:
+      microservices:
+    deploy:
+      resources:
+        limits:
+          memory: 700M
 
   cards:
     image: cards:0.0.1-SNAPSHOT
@@ -30,6 +42,12 @@ services:
       - CARDS_DB_HOST=microservices_db
     depends_on:
       - db
+    networks:
+      microservices:
+    deploy:
+      resources:
+        limits:
+          memory: 700M
 
   db:
     image: postgres:14-alpine
@@ -41,3 +59,13 @@ services:
       - POSTGRES_PASSWORD=pass
     volumes:
       - ./create_dbs.sql:/docker-entrypoint-initdb.d/create_dbs.sql:ro
+    networks:
+      microservices:
+    deploy:
+      resources:
+        limits:
+          memory: 700M
+
+networks:
+  microservices:
+    driver: bridge
