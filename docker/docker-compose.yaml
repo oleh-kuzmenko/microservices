@@ -2,7 +2,7 @@ version: '3.9'
 
 services:
   accounts:
-    image: accounts:0.0.1
+    image: accounts:0.0.1-SNAPSHOT
     container_name: accounts
     ports:
       - 8080:8080
