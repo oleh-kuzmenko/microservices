@@ -13,6 +13,13 @@ spring:
     baseline-on-migrate: true
     locations: classpath:db/schema-migration
 
+  profiles:
+    active:
+      - h2
+
+  config:
+    import: configserver:http://localhost:8071
+
 server:
   port: 9000
 

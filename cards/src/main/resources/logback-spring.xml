@@ -11,4 +11,10 @@
     </root>
   </springProfile>
 
+  <springProfile name="h2">
+    <root level="INFO">
+      <appender-ref ref="CONSOLE"/>
+    </root>
+  </springProfile>
+
 </configuration>
