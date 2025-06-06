@@ -3,13 +3,19 @@ spring:
     name: app-manager
 
   profiles:
-    active: native
+    active: git
 
   cloud:
     config:
       server:
         native:
           search-locations: classpath:/microservices
+        git:
+          uri: https://github.com/oleh-kuzmenko/microservices-configs.git
+          clone-on-start: true
+          force-pull: true
+          default-label: main
+          timeout: 10
 
 server:
   port: 8071
