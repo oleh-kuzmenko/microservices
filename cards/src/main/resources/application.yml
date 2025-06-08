@@ -13,18 +13,14 @@ spring:
     baseline-on-migrate: true
     locations: classpath:db/schema-migration
 
-  profiles:
-    active:
-      - h2
-
   config:
-    import: configserver:http://localhost:8071
+    import: configserver:${CONFIG_SERVER_URI:http://localhost:8071}
 
   cloud:
     stream:
       kafka:
         binder:
-          brokers: localhost:9092
+          brokers: ${KAFKA_HOST:localhost}:${KAFKA_PORT:9092}
 
     bus:
       trace:

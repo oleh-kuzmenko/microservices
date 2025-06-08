@@ -10,7 +10,7 @@
 
 	<groupId>com.ol</groupId>
 	<artifactId>app-manager</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>0.0.1</version>
 
 	<name>app-manager</name>
 	<description>Config server for microservices</description>
