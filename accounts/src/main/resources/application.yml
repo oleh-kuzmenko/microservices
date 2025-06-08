@@ -20,7 +20,27 @@ spring:
   config:
     import: configserver:http://localhost:8071
 
+  cloud:
+    stream:
+      kafka:
+        binder:
+          brokers: localhost:9092
+
+    bus:
+      trace:
+        enabled: true
+      refresh:
+        enabled: true
+      env:
+        enabled: true
+
 app:
   version: @project.version@
   name: @artifactId@
   description: @description@
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"

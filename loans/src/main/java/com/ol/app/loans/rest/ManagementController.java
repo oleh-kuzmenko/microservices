@@ -1,6 +1,8 @@
 package com.ol.app.loans.rest;
 
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -16,7 +18,16 @@ public class ManagementController {
     return appInfo;
   }
 
+  @Getter
+  @Setter
   @ConfigurationProperties(prefix = "app")
-  public record AppInfo(String name, String version, String description) {
+  public static final class AppInfo {
+
+    private String name;
+
+    private String version;
+
+    private String description;
+
   }
 }

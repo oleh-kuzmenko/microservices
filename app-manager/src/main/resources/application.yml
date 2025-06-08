@@ -16,6 +16,14 @@ spring:
           force-pull: true
           default-label: main
           timeout: 10
+    bus:
+      enabled: true
+
+  kafka:
+    bootstrap-servers: localhost:9092
 
 server:
   port: 8071
+
+encrypt:
+  key: Srk1mfEGpcGT7FVchkNROwMDXrWAysku0Nll2WhWHvcadreH6rdjlVD1r8B70Mfp
