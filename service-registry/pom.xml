@@ -9,11 +9,11 @@
 	</parent>
 
 	<groupId>com.ol</groupId>
-	<artifactId>app-manager</artifactId>
-	<version>0.0.1</version>
+	<artifactId>service-registry</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
 
-	<name>app-manager</name>
-	<description>Config server for microservices</description>
+	<name>service-registry</name>
+	<description>Service registry implementation</description>
 
 	<properties>
 		<java.version>21</java.version>
@@ -27,7 +27,11 @@
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>
-			<artifactId>spring-cloud-config-server</artifactId>
+			<artifactId>spring-cloud-starter-config</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-netflix-eureka-server</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>io.micrometer</groupId>

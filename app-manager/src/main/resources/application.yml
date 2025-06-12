@@ -16,11 +16,6 @@ spring:
           force-pull: true
           default-label: main
           timeout: 10
-    bus:
-      enabled: true
-
-  kafka:
-    bootstrap-servers: ${KAFKA_HOST:localhost}:${KAFKA_PORT:9092}
 
 server:
   port: 8071
