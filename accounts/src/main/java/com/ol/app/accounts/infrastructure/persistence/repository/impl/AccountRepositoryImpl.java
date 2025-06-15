@@ -32,6 +32,11 @@ class AccountRepositoryImpl implements AccountRepository {
   }
 
   @Override
+  public Optional<Account> findByPhone(String phone) {
+    return accountJpaRepository.findByPhone(phone).map(accountPersistenceMapper::toAccount);
+  }
+
+  @Override
   public void delete(Long accountId) {
     accountJpaRepository.deleteById(accountId);
   }

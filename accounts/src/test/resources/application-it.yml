@@ -5,3 +5,9 @@ spring:
     properties:
       hibernate:
         format_sql: true
+
+cards:
+  url: http://localhost:${wiremock.server.port}
+
+loans:
+  url: http://localhost:${wiremock.server.port}

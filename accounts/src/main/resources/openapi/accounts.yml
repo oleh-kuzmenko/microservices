@@ -9,6 +9,8 @@ servers:
 tags:
   - name: Accounts
     description: Accounts operations
+  - name: Customers
+    description: Customers operations
 
 paths:
 
@@ -131,6 +133,34 @@ paths:
         '500':
           $ref: '#/components/responses/InternalServerError'
 
+  /api/v1/customers:
+    get:
+      summary: get customer details by phone
+      operationId: getCustomerByPhone
+      tags:
+        - Customers
+      parameters:
+        - name: phone
+          in: query
+          required: true
+          schema:
+            type: string
+            description: Phone
+            example: 30999123341
+            minLength: 10
+            maxLength: 15
+          description: Customer phone
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CustomerResponse'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
 components:
   schemas:
 
@@ -205,6 +235,77 @@ components:
       required:
         - created_at
         - created_by
+
+    CustomerResponse:
+      type: object
+      allOf:
+        - $ref: '#/components/schemas/BaseAccount'
+      properties:
+        card_number:
+          type: string
+          description: Card number
+          example: 1234 5678 9012 3456
+          pattern: '^\d{4} \d{4} \d{4} \d{4}$'
+        card_type:
+            type: string
+            description: Card type
+            example: VISA
+            pattern: '^(VISA|MASTERCARD|AMERICAN EXPRESS)$'
+        total_limit:
+            type: number
+            format: double
+            description: Total limit
+            example: 1000.00
+            minimum: 0.01
+            maximum: 999999.99
+        amount_used:
+            type: number
+            format: double
+            description: Amount used
+            example: 500.00
+            minimum: 0.01
+            maximum: 999999.99
+        available_amount:
+            type: number
+            format: double
+            description: Available amount
+            example: 500.00
+            minimum: 0.01
+            maximum: 999999.99
+        loan_number:
+            type: string
+            description: Loan number
+            example: 123456789
+            pattern: '^\d{9}$'
+        loan_type:
+            type: string
+            description: Loan type
+            example: PERSONAL
+            pattern: '^(PERSONAL|BUSINESS)$'
+        total_loan:
+            type: number
+            format: double
+            description: Total loan
+            example: 10000.00
+            minimum: 0.01
+            maximum: 999999.99
+        amount_paid:
+            type: number
+            format: double
+            description: Amount paid
+            example: 5000.00
+            minimum: 0.01
+            maximum: 999999.99
+      required:
+        - card_number
+        - card_type
+        - total_limit
+        - amount_used
+        - available_amount
+        - loan_number
+        - loan_type
+        - total_loan
+        - amount_paid
 
     AccountEmail:
       type: string

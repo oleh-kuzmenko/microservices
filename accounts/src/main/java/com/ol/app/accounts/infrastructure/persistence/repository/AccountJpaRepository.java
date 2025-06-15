@@ -9,5 +9,7 @@ public interface AccountJpaRepository extends JpaRepository<AccountEntity, Long>
 
   Optional<AccountEntity> findByEmail(String email);
 
+  Optional<AccountEntity> findByPhone(String phone);
+
   boolean existsByEmailOrPhone(String email, String phone);
 }

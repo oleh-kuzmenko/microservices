@@ -10,6 +10,8 @@ public interface AccountRepository {
 
   Optional<Account> findByEmail(String email);
 
+  Optional<Account> findByPhone(String phone);
+
   void delete(Long accountId);
 
   boolean existsByEmailOrPhone(String email, String phone);
