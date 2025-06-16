@@ -50,8 +50,6 @@ services:
       - 8080:8080
     environment:
       - SPRING_PROFILES_ACTIVE=h2
-      - CARDS_URL=http://cards:9000
-      - LOANS_URL=http://loans:8090
       - CONFIG_SERVER_URI=http://app-manager:8071
       - SERVICE_REGISTRY_UTI=http://service-registry:8070/eureka
     depends_on:

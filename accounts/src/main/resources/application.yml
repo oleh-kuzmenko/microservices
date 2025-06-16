@@ -52,9 +52,3 @@ info:
     build:
         name: @artifactId@
         version: @project.version@
-
-cards:
-  url: ${CARDS_URL:http://localhost:9000}
-
-loans:
-  url: ${LOANS_URL:http://localhost:8090}
