@@ -3,16 +3,9 @@ spring:
     name: gateway
 
   config:
-    import: optional:configserver:${CONFIG_SERVER_URI:http://localhost:8071}
-
-  cloud:
-    gateway:
-      server:
-        webflux:
-          discovery:
-            locator:
-              enabled: true
-              lower-case-service-id: true
+    import:
+      - optional:configserver:${CONFIG_SERVER_URI:http://localhost:8071}
+      - classpath:routing.yml
 
 management:
   endpoints:

@@ -43,6 +43,24 @@ services:
         limits:
           memory: 700M
 
+  gateway:
+    image: gateway:0.0.1
+    container_name: gateway
+    ports:
+      - 8072:8072
+    environment:
+      - CONFIG_SERVER_URI=http://app-manager:8071
+      - SERVICE_REGISTRY_UTI=http://service-registry:8070/eureka
+    depends_on:
+      service-registry:
+        condition: service_healthy
+    networks:
+      microservices:
+    deploy:
+      resources:
+        limits:
+          memory: 700M
+
   accounts:
     image: accounts:0.0.1
     container_name: accounts
