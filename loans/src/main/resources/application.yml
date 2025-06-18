@@ -55,3 +55,7 @@ info:
   build:
     name: @artifactId@
     version: @project.version@
+
+logging:
+  level:
+    org.springframework.web: DEBUG

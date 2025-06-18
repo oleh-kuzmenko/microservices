@@ -1,11 +1,7 @@
 package com.ol.app.accounts.infrastructure.client.loans;
 
-import com.ol.app.accounts.domain.Card;
-import com.ol.app.accounts.domain.CardRepository;
 import com.ol.app.accounts.domain.Loan;
 import com.ol.app.accounts.domain.LoanRepository;
-import com.ol.app.accounts.infrastructure.client.cards.CardsClient;
-import com.ol.app.accounts.infrastructure.client.mapper.CardMapper;
 import com.ol.app.accounts.infrastructure.client.mapper.LoanMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;

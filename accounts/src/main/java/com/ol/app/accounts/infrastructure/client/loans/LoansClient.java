@@ -1,11 +1,12 @@
 package com.ol.app.accounts.infrastructure.client.loans;
 
+import com.ol.app.accounts.infrastructure.client.ClientConfig;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-@FeignClient(name = "loans", path = "/api/v1/loans")
+@FeignClient(name = "loans", path = "/api/v1/loans", configuration =  ClientConfig.class)
 public interface LoansClient {
 
   @GetMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
