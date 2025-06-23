@@ -20,6 +20,16 @@ spring:
     openfeign:
       circuitbreaker:
         enabled: true
+      client:
+        config:
+          cards:
+            connect-timeout: 500
+            read-timeout: 5000
+            logger-level: full
+          loans:
+            connect-timeout: 500
+            read-timeout: 5000
+            logger-level: full
 
 app:
   version: @project.version@
@@ -61,6 +71,7 @@ info:
 logging:
   level:
     org.springframework.web: DEBUG
+    com.ol.app.accounts.infrastructure.client: DEBUG
 
 resilience4j:
   circuitbreaker:

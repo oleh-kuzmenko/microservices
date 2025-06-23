@@ -7,6 +7,14 @@ spring:
       - optional:configserver:${CONFIG_SERVER_URI:http://localhost:8071}
       - classpath:routing.yml
 
+  cloud:
+    gateway:
+      server:
+        webflux:
+          httpclient:
+            connect-timeout: 1000
+            response-timeout: 5s
+
 management:
   endpoints:
     web:
