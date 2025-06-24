@@ -19,12 +19,12 @@ spring:
   cloud:
     openfeign:
       circuitbreaker:
-        enabled: true
+        enabled: false
       client:
         config:
           cards:
             connect-timeout: 500
-            read-timeout: 5000
+            read-timeout: 25000
             logger-level: full
           loans:
             connect-timeout: 500
@@ -72,6 +72,7 @@ logging:
   level:
     org.springframework.web: DEBUG
     com.ol.app.accounts.infrastructure.client: DEBUG
+    io.github.resilience4j: DEBUG
 
 resilience4j:
   circuitbreaker:
@@ -88,3 +89,20 @@ resilience4j:
         failure-rate-threshold: 50
         wait-duration-in-open-state:
           seconds: 10000
+
+  retry:
+    configs:
+      cards:
+        max-attempts: 10
+        wait-duration: 1s
+        enable-exponential-backoff: true
+        exponential-backoff-multiplier: 2
+    instances:
+      cards:
+        base-config: cards
+
+  timelimiter:
+    configs:
+      CardsClientgetCardString:
+          timeout-duration: 25s
+          cancel-running-future: true

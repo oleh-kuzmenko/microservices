@@ -1,15 +1,17 @@
 package com.ol.app.accounts.infrastructure.client.cards;
 
 import com.ol.app.accounts.infrastructure.client.ClientConfig;
+import io.github.resilience4j.retry.annotation.Retry;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-@FeignClient(name = "cards", path = "/api/v1/cards", configuration =  ClientConfig.class, fallback = CardsClient.Fallback.class)
+@FeignClient(name = "cards", path = "/api/v1/cards", configuration = ClientConfig.class, fallback = CardsClient.Fallback.class)
 public interface CardsClient {
 
+  @Retry(name = "cards")
   @GetMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
   CardResponse getCard(@RequestParam String phone);
 
