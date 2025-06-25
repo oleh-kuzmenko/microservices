@@ -106,3 +106,9 @@ resilience4j:
       CardsClientgetCardString:
           timeout-duration: 25s
           cancel-running-future: true
+
+  ratelimiter:
+    instances:
+      loans:
+        limit-for-period: 1
+        limit-refresh-period: 10s

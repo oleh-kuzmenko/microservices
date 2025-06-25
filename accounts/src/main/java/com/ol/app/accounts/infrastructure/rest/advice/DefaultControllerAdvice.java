@@ -9,6 +9,7 @@ import java.util.stream.Collectors;
 import com.ol.app.accounts.application.exception.NotUniqueException;
 import com.ol.app.accounts.dto.ErrorResponse;
 import com.ol.app.accounts.application.exception.NotFountException;
+import io.github.resilience4j.ratelimiter.RequestNotPermitted;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.ConstraintViolationException;
 import lombok.extern.slf4j.Slf4j;
@@ -88,6 +89,18 @@ class DefaultControllerAdvice {
         .body(new ErrorResponse()
             .timestamp(OffsetDateTime.now())
             .status(HttpStatus.BAD_REQUEST.value())
+            .path(path)
+            .error(e.getMessage()));
+  }
+
+  @ExceptionHandler(RequestNotPermitted.class)
+  ResponseEntity<ErrorResponse> handleRequestNotPermitted(HttpServletRequest request, RequestNotPermitted e) {
+    String path = getErrorPath(request);
+    log.error(DEFAULT_ERROR_LOG, path, e);
+    return ResponseEntity.status(HttpStatus.TOO_MANY_REQUESTS.value())
+        .body(new ErrorResponse()
+            .timestamp(OffsetDateTime.now())
+            .status(HttpStatus.TOO_MANY_REQUESTS.value())
             .path(path)
             .error(e.getMessage()));
   }

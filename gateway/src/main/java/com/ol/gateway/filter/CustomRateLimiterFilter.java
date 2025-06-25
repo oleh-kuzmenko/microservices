@@ -31,8 +31,8 @@ public class CustomRateLimiterFilter implements GlobalFilter {
 
   public CustomRateLimiterFilter() {
     this.limit = Bandwidth.builder()
-        .capacity(1)
-        .refillIntervally(1, Duration.ofSeconds(10))
+        .capacity(3)
+        .refillIntervally(3, Duration.ofSeconds(10))
         .build();
   }
 
